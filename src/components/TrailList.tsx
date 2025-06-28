@@ -8,7 +8,7 @@ interface TrailListProps {
     difficultyFilter?: string | null
 }
 
-const TrailList = ({ onSelectTrail }: TrailListProps) => {
+const TrailList = ({ onSelectTrail, difficultyFilter }: TrailListProps) => {
     const filteredTrails = difficultyFilter ? trails.filter((trail) => trail.difficulty === difficultyFilter) : trails
 
     return (
