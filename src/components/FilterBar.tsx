@@ -20,6 +20,14 @@ const FilterBar = ({ selected, onChange }: FilterBarProps) => {
                     {diff}
                 </button>
             ))}
+            {selected && (
+                <button
+                    onClick={() => onChange(null)}
+                    className="x-3 py-1 rounded-full text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 ml-auto"
+                >
+                    Clear Filters
+                </button>
+            )}
         </div>
     )
 }

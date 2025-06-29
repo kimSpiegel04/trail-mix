@@ -5,12 +5,10 @@ import { useState } from 'react'
 import { Trail } from '@/types/Trail'
 import TrailList from '@/components/TrailList'
 import FilterBar from '@/components/FilterBar'
-import TrailModal from '@/components/TrailModal'
 
 export default function Home() {
   const [selectedTrail, setSelectedTrail] = useState<Trail | null>(null)
   const [difficultyFilter, setDifficultyFilter] = useState<string | null>(null)
-  const [selectedModalTrail, setSelectedModalTrail] = useState<Trail | null>(null)
 
   return (
     <main className="flex flex-col md:flex-row min-h-screen">
@@ -23,17 +21,11 @@ export default function Home() {
         <TrailList 
           onSelectTrail={(trail) => {
             setSelectedTrail(trail)
-            setSelectedModalTrail(trail)
           }}
           difficultyFilter={difficultyFilter}
+          selectedTrail={selectedTrail}
         />
       </div>
-      {selectedModalTrail && (
-        <TrailModal 
-          trail={selectedModalTrail}
-          onClose={() => setSelectedModalTrail(null)}
-        />
-      )}
     </main>
   )
 }

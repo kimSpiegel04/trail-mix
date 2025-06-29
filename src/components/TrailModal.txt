@@ -1,6 +1,7 @@
 'use client'
 
 import { Trail } from '@/types/Trail'
+import { useState } from 'react'
 
 interface TrailModalProps {
     trail: Trail
@@ -8,6 +9,8 @@ interface TrailModalProps {
 }
 
 const TrailModal = ({ trail, onClose }: TrailModalProps) => {
+    const [isSaved, setIsSaved] = useState(false)
+
     return (
         <div className='fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center'>
             <div className='bg-white rounded-lg max-w-md w-full p-6 relative shadow-xl'>
@@ -31,6 +34,14 @@ const TrailModal = ({ trail, onClose }: TrailModalProps) => {
                     <li>Elevation Gain: {trail.elevationGain}</li>
                     <li>Difficulty: {trail.difficulty}</li>
                 </ul>
+                <button
+                    onClick={() => setIsSaved(true)}
+                    disabled={isSaved}
+                    className={`mt-4 px-4 py-2 rounded text-sm transition 
+                        ${isSaved ? 'bg-gray-300 text-gray-600 cursor-default' : 'bg-green-600 text-white hover:bg-green-700'}`}
+                >
+                    {isSaved ? 'Saved!' : 'Save Trail'}
+                </button>
             </div>
         </div>
     )

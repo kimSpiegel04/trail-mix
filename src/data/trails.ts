@@ -65,7 +65,7 @@ export const trails: Trail[] = [
     elevationGain: 318,
     difficulty: 'Easy',
     description: 'Scenic views from one of the highest peaks in the park—great for families.',
-    imageUrl: 'stony-man-trail.jpeg',
+    imageUrl: '/images/stony-man-trail.jpeg',
   },
   
 ]

@@ -22,6 +22,7 @@ const Map = ({ selectedTrail }: MapProps) => {
     const mapRef = useRef<mapboxgl.Map | null>(null)
     const mapContainerRef = useRef<HTMLDivElement>(null)
     const popupRefs = useRef<Record<number, mapboxgl.Popup>>({})
+    const currentPopupRef = useRef<mapboxgl.Popup | null>(null)
 
     useEffect(() => {
         if (!mapContainerRef.current) return
@@ -61,8 +62,12 @@ const Map = ({ selectedTrail }: MapProps) => {
 
     // Fly to selected trail when it changes
     useEffect(() => {
-        console.log('Selected trail updated:', selectedTrail?.name)
         if (!selectedTrail || !mapRef.current) return
+
+        // cleanup the old popups
+        if (currentPopupRef.current) {
+            currentPopupRef.current.remove()
+        }
 
         mapRef.current.flyTo({
             center: [selectedTrail.longitude, selectedTrail.latitude],
@@ -73,6 +78,7 @@ const Map = ({ selectedTrail }: MapProps) => {
         const popup = popupRefs.current[selectedTrail.id]
         if (popup) {
             popup.addTo(mapRef.current)
+            currentPopupRef.current = popup
         }
     }, [selectedTrail])
 
