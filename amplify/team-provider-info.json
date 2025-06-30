@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-trailmix-dev-4d10e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::163794192720:role/amplify-trailmix-dev-4d10e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::163794192720:role/amplify-trailmix-dev-4d10e-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-trailmix-dev-4d10e-deployment",
+      "UnauthRoleName": "amplify-trailmix-dev-4d10e-unauthRole",
+      "StackName": "amplify-trailmix-dev-4d10e",
+      "StackId": "arn:aws:cloudformation:us-east-1:163794192720:stack/amplify-trailmix-dev-4d10e/7b866590-5552-11f0-a0a1-122e6edae52f",
+      "AmplifyAppId": "d1z9fwwhnzs8a"
+    },
+    "categories": {
+      "auth": {
+        "trailmix8a70dd42": {}
+      },
+      "api": {
+        "trailmix": {}
+      }
+    }
+  }
+}

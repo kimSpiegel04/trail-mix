@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Amplify } from 'aws-amplify'
+import awsExports from '../aws-exports'
+
+Amplify.configure(awsExports)
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
