@@ -28,7 +28,7 @@ const TrailList = ({ onSelectTrail, difficultyFilter, selectedTrail }: TrailList
     return (
         <div className='space-y-4 overflow-y-auto p-4 bg-white md:max-h-screen'>
             {filteredTrails.length === 0 ? (
-                <p className='text-center text-gray-500'>No trails match your filters. That's buns.</p>
+                <p className='text-center text-gray-500'>No trails match your filters. That is buns.</p>
             ) : (
                 filteredTrails.map((trail) => {
                     const isSelected = selectedTrail?.id === trail.id
