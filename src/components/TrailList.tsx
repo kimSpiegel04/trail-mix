@@ -33,7 +33,6 @@ const TrailList = ({ onSelectTrail, difficultyFilter, selectedTrail }: TrailList
                 filteredTrails.map((trail) => {
                     const isSelected = selectedTrail?.id === trail.id
                     const isSaved = savedTrailIds.includes(trail.id)
-                    console.log('rendering trail: ', trail.name, 'isSelected', isSelected, 'selectedTrailId', selectedTrail?.id, 'trailid', trail.id)
                     return (
                         <div
                             key={trail.id}

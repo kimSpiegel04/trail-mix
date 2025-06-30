@@ -11,6 +11,16 @@ export const trails: Trail[] = [
     difficulty: 'Moderate',
     description: 'A classic hike through colorful rock formations in the heart of Death Valley.',
     imageUrl: '/images/golden-canyon-trail.webp',
+    trailPath: {
+      type: "LineString",
+      coordinates: [
+        [-116.8462, 36.4201],
+        [-116.8450, 36.4215],
+        [-116.8433, 36.4225],
+        [-116.8420, 36.4230],
+        [-116.8405, 36.4239],
+      ],
+    }
   },
   {
     id: 4,

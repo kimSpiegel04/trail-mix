@@ -11,21 +11,21 @@ export default function Home() {
   const [difficultyFilter, setDifficultyFilter] = useState<string | null>(null)
 
   return (
-    <main className="flex flex-col md:flex-row min-h-screen">
-      <div className="md:w-2/3 h-[400px] md:h-screen">
-      <h1 className="text-3xl font-bold mb-4">Trail Mix</h1>
-        <Map selectedTrail={selectedTrail} />
-      </div>
-      <div className="md:w-1/3 border-l border-gray-200">
-        <FilterBar selected={difficultyFilter} onChange={setDifficultyFilter} />
-        <TrailList 
-          onSelectTrail={(trail) => {
-            setSelectedTrail(trail)
-          }}
-          difficultyFilter={difficultyFilter}
-          selectedTrail={selectedTrail}
-        />
-      </div>
-    </main>
+        <main className="flex flex-col md:flex-row h-[100vh]">
+            <div className="md:w-2/3 w-full h-[50vh] md:h-full">
+                <h1 className="text-3xl font-bold mb-4">Trail Mix</h1>
+                <Map selectedTrail={selectedTrail} />
+            </div>
+            <div className="md:w-1/3 w-full overflow-y-auto max-h-[50vh] md:max-h-full border-r">
+                <FilterBar selected={difficultyFilter} onChange={setDifficultyFilter} />
+                <TrailList 
+                onSelectTrail={(trail) => {
+                    setSelectedTrail(trail)
+                }}
+                difficultyFilter={difficultyFilter}
+                selectedTrail={selectedTrail}
+                />
+            </div>
+        </main>
   )
 }

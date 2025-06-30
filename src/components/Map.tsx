@@ -60,29 +60,78 @@ const Map = ({ selectedTrail }: MapProps) => {
         return () => map.remove()
     }, [])
 
-    // Fly to selected trail when it changes
+    // Fly to selected trail when it is selected, handle popups, add trail lines
     useEffect(() => {
         if (!selectedTrail || !mapRef.current) return
-
-        // cleanup the old popups
-        if (currentPopupRef.current) {
-            currentPopupRef.current.remove()
-        }
-
+        
         mapRef.current.flyTo({
             center: [selectedTrail.longitude, selectedTrail.latitude],
             zoom: 12,
             speed: 1.2,
         })
 
+        // cleanup the old popups
+        if (currentPopupRef.current) {
+            currentPopupRef.current.remove()
+        }
+        // add popup
         const popup = popupRefs.current[selectedTrail.id]
         if (popup) {
             popup.addTo(mapRef.current)
             currentPopupRef.current = popup
         }
+
+        // trail line layovers
+        if (!mapRef.current || !selectedTrail?.trailPath) return
+
+        const map = mapRef.current
+      
+        // Cleanup existing layer + source
+        if (map.getLayer('trail-line')) {
+          map.removeLayer('trail-line')
+        }
+        if (map.getSource('trail-line')) {
+          map.removeSource('trail-line')
+        }
+      
+        // Add new source
+        map.addSource('trail-line', {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            geometry: selectedTrail.trailPath,
+            properties: {} // for metadata later
+          },
+        })
+      
+        // Wait a tick for the source to register
+        map.on('sourcedata', function handleSource(e) {
+          if (e.sourceId === 'trail-line' && e.isSourceLoaded) {
+            // Now add the layer
+            if (!map.getLayer('trail-line')) {
+              map.addLayer({
+                id: 'trail-line',
+                type: 'line',
+                source: 'trail-line',
+                layout: {
+                  'line-join': 'round',
+                  'line-cap': 'round',
+                },
+                paint: {
+                  'line-color': '#10B981',
+                  'line-width': 4,
+                },
+              })
+            }
+      
+            map.off('sourcedata', handleSource) // clean up listener
+          }
+        })
+
     }, [selectedTrail])
 
     return <div ref={mapContainerRef} className="w-full h-full" />
+
 }
 
 

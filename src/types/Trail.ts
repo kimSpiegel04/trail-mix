@@ -1,3 +1,5 @@
+import type { LineString } from 'geojson'
+
 export interface Trail {
     id: number
     name: string
@@ -8,4 +10,5 @@ export interface Trail {
     difficulty: 'Easy' | 'Moderate' | 'Hard'
     description?: string
     imageUrl?: string
+    trailPath?: LineString
 }
