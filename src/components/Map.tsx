@@ -49,9 +49,10 @@ const Map = ({ selectedTrail }: MapProps) => {
             `)
         
             const marker = new mapboxgl.Marker({ color: '#228B22' })
-            .setLngLat([trail.longitude, trail.latitude])
-            .setPopup(popup)
-            .addTo(map)
+            marker
+                .setLngLat([trail.longitude, trail.latitude])
+                .setPopup(popup)
+                .addTo(map)
 
             popupRefs.current[trail.id] = popup
         })
@@ -88,20 +89,20 @@ const Map = ({ selectedTrail }: MapProps) => {
       
         // Cleanup existing layer + source
         if (map.getLayer('trail-line')) {
-          map.removeLayer('trail-line')
+            map.removeLayer('trail-line')
         }
         if (map.getSource('trail-line')) {
-          map.removeSource('trail-line')
+            map.removeSource('trail-line')
         }
       
         // Add new source
         map.addSource('trail-line', {
-          type: 'geojson',
-          data: {
-            type: 'Feature',
-            geometry: selectedTrail.trailPath,
-            properties: {} // for metadata later
-          },
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                geometry: selectedTrail.trailPath,
+                properties: {} // for metadata later
+            },
         })
       
         // Wait a tick for the source to register
