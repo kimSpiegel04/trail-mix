@@ -1,7 +1,7 @@
 import type { LineString } from 'geojson'
 
 export interface Trail {
-    id: number
+    id: string
     name: string
     latitude: number
     longitude: number

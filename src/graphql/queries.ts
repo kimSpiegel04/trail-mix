@@ -15,8 +15,11 @@ export const getTrail = /* GraphQL */ `query GetTrail($id: ID!) {
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt
@@ -37,8 +40,11 @@ export const listTrails = /* GraphQL */ `query ListTrails(
       description
       difficulty
       distance
+      latitude
+      longitude
+      distanceMiles
       elevationGain
-      image
+      imageUrl
       location
       trailPath
       createdAt

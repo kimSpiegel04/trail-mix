@@ -13,8 +13,11 @@ type Trail @model
   description: String
   difficulty: String
   distance: Float
+  latitude: Float
+  longitude: Float
+  distanceMiles: Float
   elevationGain: Int
-  image: String
+  imageUrl: String
   location: String
-  trailPath: AWSJSON
+  trailPath: String
 }

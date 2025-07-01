@@ -15,8 +15,11 @@ export const onCreateTrail = /* GraphQL */ `subscription OnCreateTrail($filter: 
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt
@@ -35,8 +38,11 @@ export const onUpdateTrail = /* GraphQL */ `subscription OnUpdateTrail($filter: 
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt
@@ -55,8 +61,11 @@ export const onDeleteTrail = /* GraphQL */ `subscription OnDeleteTrail($filter: 
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt

@@ -1,17 +1,24 @@
 'use client'
 
-import { Trail } from '@/types/Trail'
-import { trails } from '@/data/trails'
+// import { trails } from '@/data/trails'
 import { useState, useEffect } from 'react'
+import { GraphQLAPI } from '@aws-amplify/api-graphql'
+import { generateClient } from 'aws-amplify/api'
+import { listTrails } from '../graphql/queries' 
+import { Trail, ListTrailsQuery } from '../API'
+
+const client = generateClient()
 
 interface TrailListProps {
     onSelectTrail?: (trail: Trail) => void
     difficultyFilter?: string | null
     selectedTrail?: Trail | null
+    trails: Trail[]
+    setTrails: React.Dispatch<React.SetStateAction<Trail[]>>
 }
 
-const TrailList = ({ onSelectTrail, difficultyFilter, selectedTrail }: TrailListProps) => {
-    const [savedTrailIds, setSavedTrailIds] = useState<number[]>([])
+const TrailList = ({ onSelectTrail, difficultyFilter, selectedTrail, trails, setTrails }: TrailListProps) => {
+    const [savedTrailIds, setSavedTrailIds] = useState<string[]>([])
     const filteredTrails = difficultyFilter ? trails.filter((trail) => trail.difficulty === difficultyFilter) : trails
 
     useEffect(() => {

@@ -18,8 +18,11 @@ export const createTrail = /* GraphQL */ `mutation CreateTrail(
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt
@@ -41,8 +44,11 @@ export const updateTrail = /* GraphQL */ `mutation UpdateTrail(
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt
@@ -64,8 +70,11 @@ export const deleteTrail = /* GraphQL */ `mutation DeleteTrail(
     description
     difficulty
     distance
+    latitude
+    longitude
+    distanceMiles
     elevationGain
-    image
+    imageUrl
     location
     trailPath
     createdAt

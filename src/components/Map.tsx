@@ -3,8 +3,8 @@
 import { useEffect, useRef } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { trails } from '@/data/trails'
-import { Trail } from '@/types/Trail'
+// import { trails } from '@/data/trails'
+import { Trail } from '../API'
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN as string
 
@@ -16,16 +16,17 @@ const DEFAULT_COORDS = {
 
 interface MapProps {
     selectedTrail?: Trail | null
+    trails: Trail[]
 }
 
-const Map = ({ selectedTrail }: MapProps) => {
+const Map = ({ selectedTrail, trails }: MapProps) => {
     const mapRef = useRef<mapboxgl.Map | null>(null)
     const mapContainerRef = useRef<HTMLDivElement>(null)
-    const popupRefs = useRef<Record<number, mapboxgl.Popup>>({})
+    const popupRefs = useRef<Record<string, mapboxgl.Popup>>({})
     const currentPopupRef = useRef<mapboxgl.Popup | null>(null)
 
     useEffect(() => {
-        if (!mapContainerRef.current) return
+        if (!mapContainerRef.current || mapRef.current) return
 
             const map = new mapboxgl.Map({
             container: mapContainerRef.current,
@@ -41,20 +42,23 @@ const Map = ({ selectedTrail }: MapProps) => {
 
         // Add markers
         trails.forEach((trail) => {
-            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-                <h3>${trail.name}</h3>
-                <p>Distance: ${trail.distanceMiles} miles<br/>
-                Elevation Gain: ${trail.elevationGain} ft<br/>
-                Difficulty: ${trail.difficulty}</p>
-            `)
-        
-            const marker = new mapboxgl.Marker({ color: '#228B22' })
-            marker
-                .setLngLat([trail.longitude, trail.latitude])
-                .setPopup(popup)
-                .addTo(map)
+            if (trail.longitude != null && trail.latitude != null) {
+                const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
+                    <h3>${trail.name}</h3>
+                    <p>Distance: ${trail.distanceMiles} miles<br/>
+                    Elevation Gain: ${trail.elevationGain} ft<br/>
+                    Difficulty: ${trail.difficulty}</p>
+                `)
+            
+                const marker = new mapboxgl.Marker({ color: '#228B22' })
+                marker
+                    .setLngLat([trail.longitude, trail.latitude])
+                    .setPopup(popup)
+                    .addTo(map)
+    
+                popupRefs.current[trail.id] = popup
 
-            popupRefs.current[trail.id] = popup
+            }
         })
 
         // Cleanup
@@ -64,12 +68,14 @@ const Map = ({ selectedTrail }: MapProps) => {
     // Fly to selected trail when it is selected, handle popups, add trail lines
     useEffect(() => {
         if (!selectedTrail || !mapRef.current) return
-        
-        mapRef.current.flyTo({
-            center: [selectedTrail.longitude, selectedTrail.latitude],
-            zoom: 12,
-            speed: 1.2,
-        })
+
+        if (selectedTrail.longitude != null && selectedTrail.latitude != null) {
+            mapRef.current.flyTo({
+                center: [selectedTrail.longitude, selectedTrail.latitude],
+                zoom: 12,
+                speed: 1.2,
+            })
+        }
 
         // cleanup the old popups
         if (currentPopupRef.current) {
@@ -77,9 +83,9 @@ const Map = ({ selectedTrail }: MapProps) => {
         }
         // add popup
         const popup = popupRefs.current[selectedTrail.id]
-        if (popup) {
-            popup.addTo(mapRef.current)
-            currentPopupRef.current = popup
+        if (popup && mapRef.current) {
+          popup.addTo(mapRef.current)
+          currentPopupRef.current = popup
         }
 
         // trail line layovers
@@ -100,9 +106,9 @@ const Map = ({ selectedTrail }: MapProps) => {
             type: 'geojson',
             data: {
                 type: 'Feature',
-                geometry: selectedTrail.trailPath,
+                geometry: JSON.parse(selectedTrail.trailPath as string),
                 properties: {} // for metadata later
-            },
+            } 
         })
       
         // Wait a tick for the source to register
